@@ -11,8 +11,14 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
   return (
     <main>
       {children}
-      {showSettings && settings}
-      <SettingsButton onClick={handleToggleSettings} extraClass={styles.optionsButton}/>
+      {showSettings && (
+        <div className={styles.overlay}>
+          <aside className={styles.aside}>
+            {settings}
+          </aside>
+        </div>
+      )}
+      <SettingsButton onClick={handleToggleSettings} extraClass={styles.optionsButton} />
     </main>
   )
 }
