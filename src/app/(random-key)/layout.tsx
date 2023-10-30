@@ -1,7 +1,8 @@
 'use client'
-import SettingsButton from '@/components/settings-button/settings-button';
-import { useState } from 'react';
+import SettingsButton from '@/components/settings-button/settings-button'
+import { useState } from 'react'
 import styles from './layout.module.css'
+import Slideout from '@/components/slideout/slideout';
 
 export default function RandomKeyLayout({ children, settings }: { children: React.ReactNode, settings: React.ReactNode }) {
   const [showSettings, setShowSettings] = useState(false);
@@ -11,13 +12,11 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
   return (
     <main>
       {children}
-      {showSettings && (
-        <div className={styles.overlay}>
-          <aside className={styles.aside}>
-            {settings}
-          </aside>
-        </div>
-      )}
+      <Slideout
+        isOpen={showSettings}
+      >
+        {settings}
+      </Slideout>
       <SettingsButton onClick={handleToggleSettings} extraClass={styles.optionsButton} />
     </main>
   )
