@@ -1,9 +1,11 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
-  --background: #000;
+  --background: #111;
 }
 
 @media (prefers-color-scheme: dark) {

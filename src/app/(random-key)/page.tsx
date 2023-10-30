@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <main className={styles.main}>
-      <h1>Случайные тональности</h1>
+      <h1 className={styles.heading}>Случайные тональности</h1>
     </main>
   )
 }

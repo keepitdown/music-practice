@@ -1,0 +1,15 @@
+.button {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  transition: box-shadow .5s;
+}
+
+.button:hover {
+  box-shadow: #a7a7a7 0 0 10px 4px;
+  cursor: pointer;
+}
+
+.image {
+  display: block;
+}
