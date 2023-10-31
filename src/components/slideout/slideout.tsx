@@ -1,20 +1,43 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, ReactNode, Dispatch, SetStateAction, MouseEventHandler } from 'react'
 import styles from './slideout.module.css'
 
-export default function Slideout({ children, isOpen }: { children: React.ReactNode, isOpen: boolean }) {
+type TSlideout = {
+  children: ReactNode;
+  isOpen: boolean;
+  setDisableButton: Dispatch<SetStateAction<boolean>>;
+  setShowSettings: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function Slideout({ children, isOpen, setDisableButton, setShowSettings }: TSlideout) {
   const [shouldRender, setShouldRender] = useState(isOpen);
-  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      setShouldRender(true);
-    }
-    if (!isOpen && shouldRender) {
-      overlayRef.current?.addEventListener('animationend', () => setShouldRender(false), { once: true });
-    }
+    isOpen && setShouldRender(true);
+  }, [isOpen]);
+
+  const unmountOnClose = () => {
+    !isOpen && setShouldRender(false);
+  };
+
+  const disableButton = () => {
+    setDisableButton(true);
+  };
+
+  const reenableButton = () => {
+    setDisableButton(false);
+  };
+
+  const handleAnimationEnd = () => {
+    unmountOnClose();
+    reenableButton();
   }
-    , [isOpen, shouldRender]);
+
+  const handleOverlayClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    if (e.target === e.currentTarget) {
+      setShowSettings(false);
+    }
+  };
 
 
   if (!shouldRender) {
@@ -22,8 +45,13 @@ export default function Slideout({ children, isOpen }: { children: React.ReactNo
   }
 
   return (
-    <div className={styles.overlay + (!isOpen ? (' ' + styles.closing) : '')} ref={overlayRef}>
-      <aside className={styles.content + (!isOpen ? (' ' + styles.closing) : '')}>
+    <div
+      className={styles.overlay + (!isOpen ? (' ' + styles.close) : '')}
+      onAnimationEnd={handleAnimationEnd}
+      onAnimationStart={disableButton}
+      onClick={handleOverlayClick}
+    >
+      <aside className={styles.content + (!isOpen ? (' ' + styles.close) : '')}>
         {children}
       </aside>
     </div>

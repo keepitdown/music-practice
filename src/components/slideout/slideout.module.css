@@ -9,7 +9,7 @@
   animation: fade-in 1.5s forwards;
 }
 
-.overlay.closing {
+.overlay.close {
   animation: fade-out 1.5s;
 }
 
@@ -22,7 +22,7 @@
   animation: slide-in .8s cubic-bezier(.38, .76, .57, 1);
 }
 
-.content.closing {
+.content.close {
   animation: slide-out .8s cubic-bezier(.38, .76, .57, 1) forwards;
 }
 
