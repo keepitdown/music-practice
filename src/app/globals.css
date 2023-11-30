@@ -6,21 +6,33 @@
 
 :root {
   --background: #111;
+  --alt-background: #212121;
+  --primary-color: #fff;
+  --overlay-color: #111c;
+  background-color: var(--background);
+  color: var(--primary-color);
+}
+
+.srOnly {
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     background-color: var(--background);
   }
+
+  html {
+    color-scheme: dark;
+  }
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }

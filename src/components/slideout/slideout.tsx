@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect, ReactNode, Dispatch, SetStateAction, MouseEventHandler } from 'react'
+import { useState, useEffect, ReactNode, Dispatch, SetStateAction, MouseEventHandler } from 'react'
 import styles from './slideout.module.css'
 
 type TSlideout = {

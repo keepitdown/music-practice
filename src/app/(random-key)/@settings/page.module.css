@@ -1,3 +1,11 @@
+.heading {
+  margin-bottom: 20px;
+}
+
+.subHeading {
+  margin-bottom: 15px;
+}
+
 /*.heading::after {
   content: '';
   display: block;

@@ -15,7 +15,7 @@
 
 .content {
   padding: 30px 0 0 40px;
-  background-color: #212121;
+  background-color: var(--alt-background);
   height: 100%;
   width: 80%;
   max-width: 500px;
@@ -52,13 +52,13 @@
   }
 
   to {
-    background-color: #111c;
+    background-color: var(--overlay-color);
   }
 }
 
 @keyframes fade-out {
   from {
-    background-color: #111c;
+    background-color: var(--overlay-color);
   }
 
   to {
