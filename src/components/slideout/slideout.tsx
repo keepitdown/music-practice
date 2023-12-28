@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, ReactNode, Dispatch, SetStateAction, MouseEventHandler } from 'react'
+import { useState, useEffect, ReactNode, Dispatch, SetStateAction, MouseEventHandler, AnimationEventHandler } from 'react'
 import styles from './slideout.module.css'
 
 type TSlideout = {
@@ -28,8 +28,12 @@ export default function Slideout({ children, isOpen, setDisableButton, setShowSe
     setDisableButton(false);
   };
 
-  const handleAnimationEnd = () => {
-    unmountOnClose();
+  //TODO: Button reenable refactor
+
+  const handleAnimationEnd: AnimationEventHandler<HTMLDivElement> = (e) => {
+    if (e.target === e.currentTarget) {
+      unmountOnClose();
+    }
     reenableButton();
   }
 
