@@ -2,10 +2,12 @@ import { useState } from 'react'
 import Checkbox from '../checkbox/checkbox'
 import { TAccidental, TKey } from '@/utility/types'
 import styles from './key-selector.module.css'
+import Button from '../button/button'
+import { initialSate } from '@/utility/selectorState'
 
 export default function KeySelector() {
-  // Make properties for keys non-optional 
-  const [selectedKeys, setSelectedKeys] = useState<{ [accidental in TAccidental]: { [key in TKey]?: boolean } }>({ natural: { c: false }, sharp: {}, flat: {} });
+  // TODO: Implement state manager
+  const [selectedKeys, setSelectedKeys] = useState<{ [accidental in TAccidental]: { [key in TKey]: boolean } }>(initialSate);
 
   const handleChange = ({ key, accidental }: { key: TKey, accidental: TAccidental }) => {
     setSelectedKeys({
@@ -13,27 +15,42 @@ export default function KeySelector() {
       [accidental]: { ...selectedKeys[accidental], [key]: !selectedKeys[accidental][key] }
     });
   }
+
+  const handleAccidentalClick = (accidental: TAccidental) => {
+    const keysStates = Object.values(selectedKeys[accidental]);
+    if (keysStates.includes(false)) {
+      setSelectedKeys({
+        ...selectedKeys,
+        [accidental]: {c: true, d: true, e: true, f: true, g: true, a: true, b: true}
+      });
+    } else {
+      setSelectedKeys({
+        ...selectedKeys,
+        [accidental]: {c: false, d: false, e: false, f: false, g: false, a: false, b: false}
+      });
+    }
+  };
+
   return (
     <form className={styles.form}>
       <table className={styles.table}>
         <thead className={styles.tableHeading}>
           <tr>
             <td className={styles.keysHeading}></td>
-            <th scope="col">&#9838;</th>
-            <th scope="col">&#9839;</th>
-            <th scope="col">&#9837;</th>
+            <th scope="col"><Button onClick={() => handleAccidentalClick('natural')}>&#9838;</Button></th>
+            <th scope="col"><Button onClick={() => handleAccidentalClick('sharp')}>&#9839;</Button></th>
+            <th scope="col"><Button onClick={() => handleAccidentalClick('flat')}>&#9837;</Button></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th className={styles.key} scope="row">C</th>
-            {/*Remove 'as boolean'*/}
             <td>
               <label htmlFor="c-natural" className="srOnly">До</label>
               <Checkbox
                 id="c-natural"
                 name="c-natural"
-                checked={selectedKeys.natural.c as boolean}
+                checked={selectedKeys.natural.c}
                 onChange={() => handleChange({ key: 'c', accidental: 'natural' })}
               />
             </td>
@@ -42,7 +59,7 @@ export default function KeySelector() {
               <Checkbox
                 id="c-sharp"
                 name="c-sharp"
-                checked={selectedKeys.sharp.c as boolean}
+                checked={selectedKeys.sharp.c}
                 onChange={() => handleChange({ key: 'c', accidental: 'sharp' })}
               />
             </td>
@@ -51,7 +68,7 @@ export default function KeySelector() {
               <Checkbox
                 id="c-flat"
                 name="c-flat"
-                checked={selectedKeys.flat.c as boolean}
+                checked={selectedKeys.flat.c}
                 onChange={() => handleChange({ key: 'c', accidental: 'flat' })}
               />
             </td>
@@ -63,7 +80,7 @@ export default function KeySelector() {
               <Checkbox
                 id="d-natural"
                 name="d-natural"
-                checked={selectedKeys.natural.d as boolean}
+                checked={selectedKeys.natural.d}
                 onChange={() => handleChange({ key: 'd', accidental: 'natural' })}
               />
             </td>
@@ -72,7 +89,7 @@ export default function KeySelector() {
               <Checkbox
                 id="d-sharp"
                 name="d-sharp"
-                checked={selectedKeys.sharp.d as boolean}
+                checked={selectedKeys.sharp.d}
                 onChange={() => handleChange({ key: 'd', accidental: 'sharp' })}
               />
             </td>
@@ -81,7 +98,7 @@ export default function KeySelector() {
               <Checkbox
                 id="d-flat"
                 name="d-flat"
-                checked={selectedKeys.flat.d as boolean}
+                checked={selectedKeys.flat.d}
                 onChange={() => handleChange({ key: 'd', accidental: 'flat' })}
               />
             </td>
@@ -93,7 +110,7 @@ export default function KeySelector() {
               <Checkbox
                 id="e-natural"
                 name="e-natural"
-                checked={selectedKeys.natural.e as boolean}
+                checked={selectedKeys.natural.e}
                 onChange={() => handleChange({ key: 'e', accidental: 'natural' })}
               />
             </td>
@@ -102,7 +119,7 @@ export default function KeySelector() {
               <Checkbox
                 id="e-sharp"
                 name="e-sharp"
-                checked={selectedKeys.sharp.e as boolean}
+                checked={selectedKeys.sharp.e}
                 onChange={() => handleChange({ key: 'e', accidental: 'sharp' })}
               />
             </td>
@@ -111,7 +128,7 @@ export default function KeySelector() {
               <Checkbox
                 id="e-flat"
                 name="e-flat"
-                checked={selectedKeys.flat.e as boolean}
+                checked={selectedKeys.flat.e}
                 onChange={() => handleChange({ key: 'e', accidental: 'flat' })}
               />
             </td>
@@ -123,7 +140,7 @@ export default function KeySelector() {
               <Checkbox
                 id="f-natural"
                 name="f-natural"
-                checked={selectedKeys.natural.f as boolean}
+                checked={selectedKeys.natural.f}
                 onChange={() => handleChange({ key: 'f', accidental: 'natural' })}
               />
             </td>
@@ -132,7 +149,7 @@ export default function KeySelector() {
               <Checkbox
                 id="f-sharp"
                 name="f-sharp"
-                checked={selectedKeys.sharp.f as boolean}
+                checked={selectedKeys.sharp.f}
                 onChange={() => handleChange({ key: 'f', accidental: 'sharp' })}
               />
             </td>
@@ -141,7 +158,7 @@ export default function KeySelector() {
               <Checkbox
                 id="f-flat"
                 name="f-flat"
-                checked={selectedKeys.flat.f as boolean}
+                checked={selectedKeys.flat.f}
                 onChange={() => handleChange({ key: 'f', accidental: 'flat' })}
               />
             </td>
@@ -153,7 +170,7 @@ export default function KeySelector() {
               <Checkbox
                 id="g-natural"
                 name="g-natural"
-                checked={selectedKeys.natural.g as boolean}
+                checked={selectedKeys.natural.g}
                 onChange={() => handleChange({ key: 'g', accidental: 'natural' })}
               />
             </td>
@@ -162,7 +179,7 @@ export default function KeySelector() {
               <Checkbox
                 id="g-sharp"
                 name="g-sharp"
-                checked={selectedKeys.sharp.g as boolean}
+                checked={selectedKeys.sharp.g}
                 onChange={() => handleChange({ key: 'g', accidental: 'sharp' })}
               />
             </td>
@@ -171,7 +188,7 @@ export default function KeySelector() {
               <Checkbox
                 id="g-flat"
                 name="g-flat"
-                checked={selectedKeys.flat.g as boolean}
+                checked={selectedKeys.flat.g}
                 onChange={() => handleChange({ key: 'g', accidental: 'flat' })}
               />
             </td>
@@ -183,7 +200,7 @@ export default function KeySelector() {
               <Checkbox
                 id="a-natural"
                 name="a-natural"
-                checked={selectedKeys.natural.a as boolean}
+                checked={selectedKeys.natural.a}
                 onChange={() => handleChange({ key: 'a', accidental: 'natural' })}
               />
             </td>
@@ -192,7 +209,7 @@ export default function KeySelector() {
               <Checkbox
                 id="a-sharp"
                 name="a-sharp"
-                checked={selectedKeys.sharp.a as boolean}
+                checked={selectedKeys.sharp.a}
                 onChange={() => handleChange({ key: 'a', accidental: 'sharp' })}
               />
             </td>
@@ -201,7 +218,7 @@ export default function KeySelector() {
               <Checkbox
                 id="a-flat"
                 name="a-flat"
-                checked={selectedKeys.flat.a as boolean}
+                checked={selectedKeys.flat.a}
                 onChange={() => handleChange({ key: 'a', accidental: 'flat' })}
               />
             </td>
@@ -213,7 +230,7 @@ export default function KeySelector() {
               <Checkbox
                 id="b-natural"
                 name="b-natural"
-                checked={selectedKeys.natural.b as boolean}
+                checked={selectedKeys.natural.b}
                 onChange={() => handleChange({ key: 'b', accidental: 'natural' })}
               />
             </td>
@@ -222,7 +239,7 @@ export default function KeySelector() {
               <Checkbox
                 id="b-sharp"
                 name="b-sharp"
-                checked={selectedKeys.sharp.b as boolean}
+                checked={selectedKeys.sharp.b}
                 onChange={() => handleChange({ key: 'b', accidental: 'sharp' })}
               />
             </td>
@@ -231,7 +248,7 @@ export default function KeySelector() {
               <Checkbox
                 id="b-flat"
                 name="b-flat"
-                checked={selectedKeys.flat.b as boolean}
+                checked={selectedKeys.flat.b}
                 onChange={() => handleChange({ key: 'b', accidental: 'flat' })}
               />
             </td>

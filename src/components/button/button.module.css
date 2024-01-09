@@ -1,0 +1,24 @@
+.button {
+  font-size: 22px;
+  width: 32px;
+  height: 34px;
+  border: 1px solid var(--primary-color);
+  border-radius: 25%;
+  background-color: transparent;
+  transition:
+    background-color .3s ease-out,
+    color .2s;
+}
+
+.button:focus-visible {
+  background-color: var(--primary-color);
+  color: var(--alt-background);
+}
+
+@media (hover: hover) {
+  .button:hover {
+    background-color: var(--primary-color);
+    color: var(--alt-background);
+    cursor: pointer;
+  }
+}
