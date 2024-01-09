@@ -9,20 +9,15 @@ type TCheckbox = {
 };
 
 export default function Checkbox({ id, name, checked, onChange }: TCheckbox) {
-  const handleMouseDrag: MouseEventHandler<HTMLInputElement> = (e) => {
-    if (e.buttons === 1) {
-      onChange();
-    }
-  }
+
   return (
-      <input
-        type="checkbox"
-        id={id}
-        name={name}
-        className={styles.checkbox}
-        checked={checked}
-        onChange={onChange}
-        onMouseEnter={handleMouseDrag}
-      />
+    <input
+      type="checkbox"
+      id={id}
+      name={name}
+      className={styles.checkbox}
+      checked={checked}
+      onChange={onChange}
+    />
   )
 }
