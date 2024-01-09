@@ -11,6 +11,7 @@
 
 .overlay.close {
   animation: fade-out 1.5s;
+  pointer-events: none;
 }
 
 .content {
