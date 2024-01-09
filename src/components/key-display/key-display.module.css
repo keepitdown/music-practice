@@ -1,0 +1,13 @@
+.gridContainer {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-evenly;
+  row-gap: 20px;
+}
+
+.gridContainer li {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
