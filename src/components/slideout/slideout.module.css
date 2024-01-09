@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100svh;
   width: 100vw;
   display: flex;
   justify-content: flex-end;
@@ -19,11 +19,11 @@
   height: 100%;
   width: 80%;
   max-width: 500px;
-  animation: slide-in .8s cubic-bezier(.38, .76, .57, 1);
+  animation: slide-in .6s cubic-bezier(.38, .76, .57, 1);
 }
 
 .content.close {
-  animation: slide-out .8s cubic-bezier(.38, .76, .57, 1) forwards;
+  animation: slide-out .6s cubic-bezier(.38, .76, .57, 1) forwards;
 }
 
 @keyframes slide-in {
