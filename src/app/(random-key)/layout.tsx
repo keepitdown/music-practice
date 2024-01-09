@@ -34,7 +34,11 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
       >
         {settings}
       </Slideout>
-      <SettingsButton onClick={handleToggleSettings} extraClass={styles.optionsButton} disabled={disableButton} />
+      <SettingsButton
+        onClick={handleToggleSettings}
+        extraClass={styles.optionsButton}
+        disabled={disableButton}
+      />
     </main>
   )
 }
