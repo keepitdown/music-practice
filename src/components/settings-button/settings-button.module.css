@@ -5,11 +5,31 @@
   transition: box-shadow .5s;
 }
 
-.button:hover {
-  box-shadow: #a7a7a7 0 0 10px 4px;
-  cursor: pointer;
+@media (hover: hover) {
+  .button:hover {
+    box-shadow: #a7a7a7 0 0 10px 4px, #c8c8c8 0 0 5px 2px inset;
+    cursor: pointer;
+  }
 }
 
-.image {
+.buttonImage {
   display: block;
+}
+
+.pushed .buttonImage {
+  animation: scale-down .3s;
+}
+
+@keyframes scale-down {
+  from {
+    scale: 1;
+  }
+
+  50% {
+    scale: .9;
+  }
+
+  to {
+    scale: 1;
+  }
 }
