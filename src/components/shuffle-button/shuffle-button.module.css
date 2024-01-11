@@ -17,3 +17,21 @@
 .buttonImage {
   display: block;
 }
+
+.pressed .buttonImage {
+  animation: scale-down .3s;
+}
+
+@keyframes scale-down {
+  from {
+    scale: 1;
+  }
+
+  50% {
+    scale: .9;
+  }
+
+  to {
+    scale: 1;
+  }
+}
