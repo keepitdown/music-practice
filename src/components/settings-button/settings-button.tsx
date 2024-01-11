@@ -3,14 +3,22 @@ import settingsIcon from '@/images/settings-icon-cropped.svg'
 import styles from './settings-button.module.css'
 import { AnimationEventHandler, MouseEventHandler } from 'react';
 
-export default function SettingsButton({ onClick, extraClass, disabled }: { onClick: () => void, extraClass?: string, disabled?: boolean }) {
-  
+type TSettingsButton = {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  extraClass?: string;
+  disabled?: boolean;
+};
+
+export default function SettingsButton({ onClick, extraClass, disabled }: TSettingsButton) {
+
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    onClick();
-    e.currentTarget.classList.add(styles.pushed);
+    onClick(e);
+    e.currentTarget.classList.add(styles.pressed);
   };
 
-  const handleAnimationEnd: AnimationEventHandler<HTMLButtonElement> = (e) => e.currentTarget.classList.remove(styles.pushed);
+  const handleAnimationEnd: AnimationEventHandler<HTMLButtonElement> = (e) => {
+    e.currentTarget.classList.remove(styles.pressed);
+  };
 
   return (
     <button
@@ -19,7 +27,7 @@ export default function SettingsButton({ onClick, extraClass, disabled }: { onCl
       onAnimationEnd={handleAnimationEnd}
       className={styles.button + (extraClass ? (' ' + extraClass) : '')}
       disabled={disabled}
-      >
+    >
       <Image
         src={settingsIcon}
         alt="Показать настройки"

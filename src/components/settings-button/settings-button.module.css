@@ -16,7 +16,7 @@
   display: block;
 }
 
-.pushed .buttonImage {
+.pressed .buttonImage {
   animation: scale-down .3s;
 }
 
