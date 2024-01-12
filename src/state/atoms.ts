@@ -1,4 +1,3 @@
-import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 
 const keysInitialState = {
@@ -31,6 +30,4 @@ const keysInitialState = {
   }
 };
 
-export const keysAtom = withImmer(
-  atomWithStorage('selectedKeys', keysInitialState)
-);
+export const keysAtom = atomWithStorage('selectedKeys', keysInitialState);

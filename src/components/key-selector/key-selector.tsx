@@ -1,32 +1,29 @@
-import { useState } from 'react'
 import Checkbox from '../checkbox/checkbox'
 import { TAccidental, TKey } from '@/utility/types'
 import styles from './key-selector.module.css'
 import Button from '../button/button'
-import { initialSate } from '@/utility/selectorState'
+import { keysAtom } from '@/state/atoms'
+import { useImmerAtom } from 'jotai-immer'
 
 export default function KeySelector() {
-  // TODO: Implement state manager
-  const [selectedKeys, setSelectedKeys] = useState<{ [accidental in TAccidental]: { [key in TKey]: boolean } }>(initialSate);
+
+  const [selectedKeys, setSelectedKeys] = useImmerAtom(keysAtom);
 
   const handleChange = ({ key, accidental }: { key: TKey, accidental: TAccidental }) => {
-    setSelectedKeys({
-      ...selectedKeys,
-      [accidental]: { ...selectedKeys[accidental], [key]: !selectedKeys[accidental][key] }
+    setSelectedKeys(draft => {
+      draft[accidental][key] = !draft[accidental][key];
     });
   }
 
   const handleAccidentalClick = (accidental: TAccidental) => {
     const keysStates = Object.values(selectedKeys[accidental]);
     if (keysStates.includes(false)) {
-      setSelectedKeys({
-        ...selectedKeys,
-        [accidental]: {c: true, d: true, e: true, f: true, g: true, a: true, b: true}
+      setSelectedKeys(draft => {
+        draft[accidental] = { c: true, d: true, e: true, f: true, g: true, a: true, b: true };
       });
     } else {
-      setSelectedKeys({
-        ...selectedKeys,
-        [accidental]: {c: false, d: false, e: false, f: false, g: false, a: false, b: false}
+      setSelectedKeys(draft => {
+        draft[accidental] = { c: false, d: false, e: false, f: false, g: false, a: false, b: false };
       });
     }
   };
