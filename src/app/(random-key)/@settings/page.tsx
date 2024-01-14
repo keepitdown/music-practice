@@ -1,4 +1,3 @@
-'use client'
 import KeySelector from '@/components/key-selector/key-selector'
 import styles from './page.module.css'
 

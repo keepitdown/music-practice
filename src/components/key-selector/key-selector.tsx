@@ -1,3 +1,4 @@
+'use client'
 import Checkbox from '../checkbox/checkbox'
 import { TAccidental, TKey } from '@/utility/types'
 import styles from './key-selector.module.css'
@@ -13,7 +14,7 @@ export default function KeySelector() {
     setSelectedKeys(draft => {
       draft[accidental][key] = !draft[accidental][key];
     });
-  }
+  };
 
   const handleAccidentalClick = (accidental: TAccidental) => {
     const keysStates = Object.values(selectedKeys[accidental]);
@@ -26,7 +27,7 @@ export default function KeySelector() {
         draft[accidental] = { c: false, d: false, e: false, f: false, g: false, a: false, b: false };
       });
     }
-  };
+  }; // using object literals instead of loops to keep function readable and simple
 
   return (
     <form className={styles.form}>
