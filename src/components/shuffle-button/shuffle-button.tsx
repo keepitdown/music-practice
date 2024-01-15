@@ -6,7 +6,7 @@ import shuffleIcon from '@/images/repeat-icon-2-cropped.svg'
 import { AnimationEventHandler, MouseEventHandler } from 'react'
 
 type TShuffleButton = {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 // TODO: pass prop onClick from parent component or remove
@@ -14,6 +14,7 @@ type TShuffleButton = {
 export default function ShuffleButton({ onClick }: TShuffleButton) {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    onClick(e);
     e.currentTarget.classList.add(styles.pressed);
   };
 

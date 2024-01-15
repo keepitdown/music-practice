@@ -11,3 +11,5 @@ export type TKey =
   | 'g'
   | 'a'
   | 'b';
+
+export type TSelectedKeys = { [accidental in TAccidental]: { [key in TKey]: boolean } };
