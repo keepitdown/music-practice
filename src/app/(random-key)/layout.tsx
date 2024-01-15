@@ -2,7 +2,7 @@
 import SettingsButton from '@/components/settings-button/settings-button'
 import { useState, useEffect, useCallback, ReactNode } from 'react'
 import styles from './layout.module.css'
-import Slideout from '@/components/slideout/slideout';
+import Sidebar from '@/components/sidebar/sidebar';
 
 export default function RandomKeyLayout({ children, settings }: { children: ReactNode, settings: ReactNode }) {
   const [showSettings, setShowSettings] = useState(false);
@@ -27,13 +27,13 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
   return (
     <main>
       {children}
-      <Slideout
+      <Sidebar
         isOpen={showSettings}
         setDisableButton={setDisableButton}
         setShowSettings={setShowSettings}
       >
         {settings}
-      </Slideout>
+      </Sidebar>
       <SettingsButton
         onClick={handleToggleSettings}
         extraClass={styles.optionsButton}

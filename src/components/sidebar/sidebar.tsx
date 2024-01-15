@@ -1,15 +1,15 @@
 'use client'
 import { useState, useEffect, ReactNode, Dispatch, SetStateAction, MouseEventHandler, AnimationEventHandler } from 'react'
-import styles from './slideout.module.css'
+import styles from './sidebar.module.css'
 
-type TSlideout = {
+type TSidebar = {
   children: ReactNode;
   isOpen: boolean;
   setDisableButton: Dispatch<SetStateAction<boolean>>;
   setShowSettings: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function Slideout({ children, isOpen, setDisableButton, setShowSettings }: TSlideout) {
+export default function Sidebar({ children, isOpen, setDisableButton, setShowSettings }: TSidebar) {
   const [shouldRender, setShouldRender] = useState(isOpen);
 
   useEffect(() => {
