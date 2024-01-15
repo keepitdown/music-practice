@@ -1,3 +1,4 @@
+import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 const keysInitialState = {
@@ -31,3 +32,4 @@ const keysInitialState = {
 };
 
 export const keysAtom = atomWithStorage('selectedKeys', keysInitialState);
+export const settingsSidebarAtom = atom(false);

@@ -3,9 +3,11 @@ import SettingsButton from '@/components/settings-button/settings-button'
 import { useState, useEffect, useCallback, ReactNode } from 'react'
 import styles from './layout.module.css'
 import Sidebar from '@/components/sidebar/sidebar';
+import { useAtom } from 'jotai';
+import { settingsSidebarAtom } from '@/state/atoms';
 
 export default function RandomKeyLayout({ children, settings }: { children: ReactNode, settings: ReactNode }) {
-  const [showSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useAtom(settingsSidebarAtom);
   const [disableButton, setDisableButton] = useState(false);
 
   const handleToggleSettings = useCallback(() => {

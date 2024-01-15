@@ -2,7 +2,7 @@
 import styles from './page.module.css'
 import KeyDisplay from '@/components/key-display/key-display'
 import ShuffleButton from '@/components/shuffle-button/shuffle-button'
-import { keysAtom } from '@/state/atoms'
+import { keysAtom, settingsSidebarAtom } from '@/state/atoms'
 import { accidentalChars } from '@/utility/constants'
 import { TSelectedKeys } from '@/utility/types'
 import { useAtomValue } from 'jotai'
@@ -63,6 +63,7 @@ export default function RandomKeyPage() {
   const [displayedKeys, setDisplayedKeys] = useState([] as string[]);
 
   const selectedKeys = useAtomValue(keysAtom);
+  const sidebarIsOpen = useAtomValue(settingsSidebarAtom);
 
   const keysPool = useMemo(() => {
     return generatePool(selectedKeys);
@@ -73,10 +74,12 @@ export default function RandomKeyPage() {
   }, [keysPool]);
 
 
-  //TODO: prevent shuffling when settings are open (use atom for setting state)
+  //TODO: prevent shuffling on settings close without changes
   useEffect(() => {
-    handleTriggerShuffle();
-  }, [handleTriggerShuffle]);
+    if (!sidebarIsOpen) {
+      handleTriggerShuffle();
+    }
+  }, [sidebarIsOpen, handleTriggerShuffle]);
 
   return (
     <div className={styles.pageContainer}>
