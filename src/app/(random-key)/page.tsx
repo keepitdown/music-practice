@@ -6,7 +6,7 @@ import { keysAtom, settingsSidebarAtom } from '@/state/atoms'
 import { accidentalChars } from '@/utility/constants'
 import { TSelectedKeys } from '@/utility/types'
 import { useAtomValue } from 'jotai'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const addChars = {
   natural: '',
@@ -40,8 +40,8 @@ function generatePool(selectedKeys: TSelectedKeys) {
   return result;
 }
 
-function shuffleKeys(keysPool: string[], lengthLimit: number) {
-  //Fisher–Yates shuffle modified to produce output of defined length or shorter
+function shuffleKeys(keysPool: string[], lengthLimit: number = 16) {
+  //Fisher–Yates shuffle modified to produce output of defined length or shorter (16 is default limit)
   const shuffledArray = keysPool.slice();
   const arrayLength = shuffledArray.length;
 
@@ -65,21 +65,23 @@ export default function RandomKeyPage() {
   const selectedKeys = useAtomValue(keysAtom);
   const sidebarIsOpen = useAtomValue(settingsSidebarAtom);
 
-  const keysPool = useMemo(() => {
-    return generatePool(selectedKeys);
-  }, [selectedKeys]);
+  const prevSelectedKeysRef = useRef<typeof selectedKeys | null>(null);
+  const keysPoolRef = useRef([] as string[]);
 
   const handleTriggerShuffle = useCallback(() => {
-    setDisplayedKeys(shuffleKeys(keysPool, 16))
-  }, [keysPool]);
+    setDisplayedKeys(shuffleKeys(keysPoolRef.current));
+  }, []);
 
-
-  //TODO: prevent shuffling on settings close without changes
+  //On sidebar close checks whether selected keys where changed, if yes updates keysPool and triggers shuffle
   useEffect(() => {
     if (!sidebarIsOpen) {
-      handleTriggerShuffle();
+      if (selectedKeys !== prevSelectedKeysRef.current) {
+        prevSelectedKeysRef.current = selectedKeys;
+        keysPoolRef.current = (generatePool(selectedKeys));
+        handleTriggerShuffle();
+      }
     }
-  }, [sidebarIsOpen, handleTriggerShuffle]);
+  }, [sidebarIsOpen, selectedKeys, handleTriggerShuffle]);
 
   return (
     <div className={styles.pageContainer}>
