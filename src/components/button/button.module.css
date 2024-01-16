@@ -1,7 +1,8 @@
 .button {
-  font-size: 22px;
-  width: 32px;
-  height: 34px;
+  font-size: 28px;
+  font-weight: bold;
+  width: 38px;
+  height: 40px;
   border: 1px solid var(--primary-color);
   border-radius: 25%;
   background-color: transparent;

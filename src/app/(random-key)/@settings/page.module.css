@@ -1,7 +1,9 @@
 .heading {
-  margin: 0 0 20px 24px;
+  font-size: 28px;
+  margin: 0 0 22px 36px;
 }
 
 .subHeading {
-  margin: 0 0 15px 24px;
+  font-size: 22px;
+  margin: 0 0 20px 36px;
 }

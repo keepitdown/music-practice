@@ -1,5 +1,5 @@
 .form {
-  max-width: 150px;
+  max-width: 200px;
 }
 
 .table {
@@ -15,15 +15,15 @@
 .tableHeading {
   font-size: 22px;
   vertical-align: top;
-  height: 42px;
+  height: 48px;
 }
 
 .keysHeading {
-  width: 20px;
+  width: 26px;
 }
 
 .key {
   text-align: left;
-  font-size: 18px;
-  height: 35px;
+  font-size: 22px;
+  height: 52px;
 }
