@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Music Practice',
-  description: 'Инструменты для занятий музыкой',
+  description: 'Случайные тональности',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
