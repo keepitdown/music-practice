@@ -1,15 +1,7 @@
 .heading {
-  margin-bottom: 20px;
+  margin: 0 0 20px 24px;
 }
 
 .subHeading {
-  margin-bottom: 15px;
+  margin: 0 0 15px 24px;
 }
-
-/*.heading::after {
-  content: '';
-  display: block;
-  background-color: rgb(109, 77, 19);
-  width: 80%;
-  height: 2px;
-}*/
