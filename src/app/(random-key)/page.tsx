@@ -90,11 +90,11 @@ export default function RandomKeyPage() {
         handleTriggerShuffle();
       }
     };
-    window.addEventListener('keydown', handleShuffleHotKey);
+    !sidebarIsOpen && window.addEventListener('keydown', handleShuffleHotKey);
     return () => {
       window.removeEventListener('keydown', handleShuffleHotKey);
     }
-  }, [handleTriggerShuffle]);
+  }, [handleTriggerShuffle, sidebarIsOpen]);
 
   return (
     <div className={styles.pageContainer}>
