@@ -83,6 +83,19 @@ export default function RandomKeyPage() {
     }
   }, [sidebarIsOpen, selectedKeys, handleTriggerShuffle]);
 
+  //Enable shuffle hotkey
+  useEffect(() => {
+    const handleShuffleHotKey = (e: KeyboardEvent) => {
+      if (e.code === 'KeyR') {
+        handleTriggerShuffle();
+      }
+    };
+    window.addEventListener('keydown', handleShuffleHotKey);
+    return () => {
+      window.removeEventListener('keydown', handleShuffleHotKey);
+    }
+  }, [handleTriggerShuffle]);
+
   return (
     <div className={styles.pageContainer}>
       <h1 className={styles.heading}>Случайные тональности</h1>
