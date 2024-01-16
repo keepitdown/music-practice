@@ -14,6 +14,7 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
     setShowSettings(!showSettings);
   }, [setShowSettings, showSettings]);
 
+  //Enable toogle settings sidebar hotkey
   useEffect(() => {
     const handleSettingsHotKey = (e: KeyboardEvent) => {
       if (e.code === 'KeyS') {
