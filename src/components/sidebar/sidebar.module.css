@@ -19,7 +19,7 @@
   background-color: var(--alt-background);
   height: 100%;
   width: 80%;
-  max-width: 500px;
+  max-width: 350px;
   animation: slide-in .6s cubic-bezier(.38, .76, .57, 1);
 }
 
