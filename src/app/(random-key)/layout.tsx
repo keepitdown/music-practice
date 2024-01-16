@@ -12,7 +12,7 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
 
   const handleToggleSettings = useCallback(() => {
     setShowSettings(!showSettings);
-  }, [showSettings]);
+  }, [setShowSettings, showSettings]);
 
   useEffect(() => {
     const handleSettingsHotKey = (e: KeyboardEvent) => {
