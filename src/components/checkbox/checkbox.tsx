@@ -1,11 +1,11 @@
-import { MouseEventHandler } from 'react';
+import { ChangeEventHandler } from 'react';
 import styles from './checkbox.module.css'
 
 type TCheckbox = {
   id: string;
   name: string;
   checked: boolean;
-  onChange: () => void;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 };
 
 export default function Checkbox({ id, name, checked, onChange }: TCheckbox) {
