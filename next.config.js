@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  // basePath: '/music-practice',
+  basePath: '/music-practice',
   experimental: {
     swcPlugins: [['@swc-jotai/react-refresh', {}]]
   }
