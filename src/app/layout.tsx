@@ -9,12 +9,13 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Music Practice',
   description: 'Инструмент для выполнения музыкальных упражнений. Создает случайную последовательность тональностей. В настройках можно выбрать, какие тональности должны входить в последовательность.',
+  metadataBase: new URL('https://musicpractice.space'),
   openGraph: {
     title: 'Случайные тональности',
     type: 'website',
-    url: 'https://keepitdown.github.io/music-practice/',
+    url: '/',
     images: [{
-      url: 'https://keepitdown.github.io/music-practice/preview-image-cropped.png',
+      url: '/preview-image-cropped.png',
       width: 960,
       height: 620
     }]
