@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "gh-pages -d out --dotfiles"
+    "deploy": "gh-pages -d out --nojekyll --cname musicpractice.space"
   },
   "dependencies": {
     "immer": "^10.0.3",
