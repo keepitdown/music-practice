@@ -9,8 +9,8 @@
   <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" title="CSS3" alt="CSS3" width="35" height="35"/>&nbsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="TypeScript" alt="TypeScript" width="35" height="35"/>&nbsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" title="React" alt="React" width="35" height="35"/>&nbsp;
-  <img src="https://github.com/keepitdown/keepitdown/blob/main/next-js-logo.svg" title="Next.js" alt="Next.js" width="35" height="35"/>&nbsp;
-  <img src="https://github.com/keepitdown/keepitdown/blob/main/jotai-logo.svg" title="Jotai" alt="Jotai" width="35" height="35" />&nbsp;
+  <img src="https://github.com/keepitdown/keepitdown/blob/main/next-js-logo.svg" title="Next.js" alt="Next.js" width="60" height="35"/>&nbsp;
+  <img src="https://github.com/keepitdown/keepitdown/blob/main/jotai-logo.svg" title="Jotai" alt="Jotai" width="40" height="35" />&nbsp;
 </div>
 
 Приложение создано с помощью мета-фреймворка Next.js для бибилотеки React. Хранение глобального состояния осуществляется стейт-менеджером Jotai с расширением Immer. Код приложения написан на TypeScript. Используемая на текущий момент сборка представляет собой статичный экспорт фреймворка Next.js.
