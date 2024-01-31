@@ -5,6 +5,7 @@ import styles from './layout.module.css'
 import Sidebar from '@/components/sidebar/sidebar';
 import { useAtom } from 'jotai';
 import { settingsSidebarAtom } from '@/state/atoms';
+import MetronomeProvider from '@/metronome/metronome-provider';
 
 export default function RandomKeyLayout({ children, settings }: { children: ReactNode, settings: ReactNode }) {
   const [showSettings, setShowSettings] = useAtom(settingsSidebarAtom);
@@ -42,6 +43,7 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
         extraClass={styles.optionsButton}
         disabled={disableButton}
       />
+      <MetronomeProvider>{null}</MetronomeProvider>
     </main>
   )
 }
