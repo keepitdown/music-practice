@@ -2,11 +2,14 @@
 import { MouseEventHandler, ReactNode, createContext, useEffect, useRef, useState } from "react"
 import config from "./metronome.config.json"
 
-async function loadSample(sampleUrl: string, audioContext: AudioContext) {
-  const response = await fetch(sampleUrl);
-  const arrayBuffer = await response.arrayBuffer();
-  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-  return audioBuffer;
+function loadSamples(sampleUrls: string[], audioContext: AudioContext) {
+  const bufferPromises = sampleUrls.map(async url => {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return audioBuffer;
+  });
+  return Promise.all(bufferPromises);
 }
 
 function playSample(sampleBuffer: AudioBuffer, audioContext: AudioContext, time?: number) {
@@ -52,9 +55,9 @@ export default function MetronomeProvider({ children }: TMetronomeProvider) {
   useEffect(() => {
     audioContextRef.current = new AudioContext();
     const audioContext = audioContextRef.current;
-    loadSample("/audio/beat-click.wav", audioContext)
-      .then(sampleBuffer => {
-        sampleBufferRef.current = sampleBuffer;
+    loadSamples(['/audio/downbeat-click.wav', '/audio/beat-click.wav'], audioContext)
+      .then(sampleBuffers => {
+        sampleBufferRef.current = sampleBuffers[0];
       })
     return () => {
       audioContext.close();
