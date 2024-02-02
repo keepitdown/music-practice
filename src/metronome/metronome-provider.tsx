@@ -1,38 +1,40 @@
 'use client'
-import { MouseEventHandler, ReactNode, createContext, useEffect, useRef, useState } from "react";
+import { MouseEventHandler, ReactNode, createContext, useEffect, useRef, useState } from "react"
+import config from "./metronome.config.json"
 
-type TMetronomeProvider = {
-  children: ReactNode;
-}
-
-function schedulePlayback({ downbeatBuffer, beatBuffer }: { [bufferName: string]: AudioBuffer }, tempo: number, beatsPerBar: number, context: AudioContext) {
-  const beatDuration = 60 / tempo;
-  const scheduleAfterMilSec = 25;
-  const scheduleAheadSec = 0.1;
-  let nextBeat = 0;
-
-  let nextNote = context.currentTime + beatDuration;
-  while (nextNote <= context.currentTime + scheduleAheadSec) {
-    const sampleBuffer = (nextBeat === 0) ? downbeatBuffer : beatBuffer;
-    playSample(sampleBuffer, context, nextNote);
-    nextBeat = (nextBeat + 1) % beatsPerBar;
-    nextNote += beatDuration;
-  }
-
-}
-
-async function loadSample(sampleUrl: string, context: AudioContext) {
+async function loadSample(sampleUrl: string, audioContext: AudioContext) {
   const response = await fetch(sampleUrl);
   const arrayBuffer = await response.arrayBuffer();
-  const audioBuffer = await context.decodeAudioData(arrayBuffer);
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
   return audioBuffer;
 }
 
-function playSample(sampleBuffer: AudioBuffer, audioContext: AudioContext, time: number = 0) {
+function playSample(sampleBuffer: AudioBuffer, audioContext: AudioContext, time?: number) {
   const source = audioContext.createBufferSource();
   source.buffer = sampleBuffer;
   source.connect(audioContext.destination);
   source.start(time);
+}
+
+function createScheduler(audioContext: AudioContext, sampleBuffer: AudioBuffer, tempo: number, startTime: number) {
+  const beatDuration = 60 / tempo;
+  const scheduleAheadSec = config.scheduleAheadMilSec / 1000;
+  let nextBeat = 0;
+  let nextNoteTime = startTime;
+
+  function schedulePlayback() {
+    while (nextNoteTime <= audioContext.currentTime + scheduleAheadSec) {
+      // const sampleBuffer = (nextBeat === 0) ? downbeatBuffer : beatBuffer;
+      playSample(sampleBuffer, audioContext, nextNoteTime);
+      nextBeat = (nextBeat + 1) % 4; // TODO: replace 4 with a betsPerBar parameter
+      nextNoteTime += beatDuration;
+    }
+  }
+  return schedulePlayback;
+}
+
+type TMetronomeProvider = {
+  children: ReactNode;
 }
 
 const MetronomeContext = createContext(null);
@@ -43,8 +45,9 @@ export default function MetronomeProvider({ children }: TMetronomeProvider) {
   const sampleBufferRef = useRef<AudioBuffer | null>(null);
 
   const [isTurnedOn, setIsTurnedOn] = useState(false);
-  // TODO: add default tempo constant or component prop
+  // TODO: add default tempo config option or component prop
   const [tempo, setTempo] = useState(60);
+  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
   useEffect(() => {
     audioContextRef.current = new AudioContext();
@@ -58,60 +61,33 @@ export default function MetronomeProvider({ children }: TMetronomeProvider) {
     };
   }, []);
 
-  /* useEffect(() => {
-    const audioContext = audioContextRef.current as AudioContext;
-    const sampleBuffer = sampleBufferRef.current as AudioBuffer;
-    if (isTurnedOn) {
-      if (audioContext?.state === "suspended") {
-        audioContext.resume();
-      }
-      const source = audioContext.createBufferSource();
-      source.buffer = sampleBuffer;
-      source.connect((audioContext).destination);
-      source.start();
-      console.log('beep');
-    }
-    return () => {
-      //TODO: delete interval during clean-up
-    };
-  }, [isTurnedOn, tempo]); */
-
   useEffect(() => {
+    console.log('effect')
     const audioContext = audioContextRef.current as AudioContext;
     const sampleBuffer = sampleBufferRef.current as AudioBuffer;
-    if (audioContext?.state === "suspended") {
+    if (audioContext?.state === 'suspended') {
       audioContext.resume();
     }
-    // playSample(sampleBuffer, audioContext);
-    const beatDuration = 60 / tempo;
-    const scheduleAfterMilSec = 25;
-    const scheduleAheadSec = 0.1;
-    let nextBeat = 0;
-    //TODO: find out if overhead is needed
-    let nextNote = audioContext.currentTime;
-    let timerId: ReturnType<typeof setTimeout>;
 
-    function schedulePlayback() {
-      while (nextNote <= audioContext.currentTime + scheduleAheadSec) {
-        // const sampleBuffer = (nextBeat === 0) ? downbeatBuffer : beatBuffer;
-        playSample(sampleBuffer, audioContext, nextNote);
-        nextBeat = (nextBeat + 1) % 4;
-        nextNote += beatDuration;
-      }
-      timerId = setTimeout(schedulePlayback, scheduleAfterMilSec);
-    }
+    let timerId: ReturnType<typeof setTimeout>;
+    //NOTE: Inferred type is NodeJs.Timeout. Incorrect in this case, but not important.
+
     if (isTurnedOn) {
-      console.log('start');
-      schedulePlayback();
+      const schedulePlayback = createScheduler(audioContext, sampleBuffer, tempo, audioContext.currentTime);
+      const scheduleRepeatedly = () => {
+        schedulePlayback();
+        timerId = setTimeout(scheduleRepeatedly, config.scheduleAfterMilSec);
+      };
+      scheduleRepeatedly();
     }
     return () => {
       console.log('stop');
       clearTimeout(timerId);
     }
-  }, [isTurnedOn]);
+  }, [isTurnedOn, tempo]);
 
   const buttonHandler: MouseEventHandler<HTMLButtonElement> = () => {
-    setIsTurnedOn(value => !value);
+    setIsTurnedOn(state => !state);
   }
 
   return (
