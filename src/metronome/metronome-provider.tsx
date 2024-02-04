@@ -32,7 +32,13 @@ export default function MetronomeProvider({ children }: TMetronomeProvider) {
       console.log('stop');
       metronomeRef.current?.stop();
     }
-  }, [isTurnedOn, tempo]);
+  }, [isTurnedOn]);
+
+  useEffect(() => {
+    if (metronomeRef?.current?.tempo) {
+      metronomeRef.current.tempo = tempo;
+    }
+  }, [tempo]);
 
   const buttonHandler: MouseEventHandler<HTMLButtonElement> = () => {
     setIsTurnedOn(state => !state);
@@ -41,6 +47,16 @@ export default function MetronomeProvider({ children }: TMetronomeProvider) {
   return (
     <MetronomeContext.Provider value={null}>
       <button onClick={buttonHandler} style={{ position: 'fixed', left: 30, bottom: 30, fontSize: 16, padding: 5 }}>Beep</button>
+      <p style={{ position: 'fixed', left: 110, bottom: 115 }}>{tempo}</p>
+      <input
+        type="range"
+        min="30"
+        max="180"
+        step="1"
+        value={tempo}
+        onChange={(e) => setTempo(Number(e.currentTarget.value))}
+        style={{ position: 'fixed', left: 30, bottom: 80, height: 30, fontSize: 16 }}
+      />
       {children}
     </MetronomeContext.Provider>
   );
