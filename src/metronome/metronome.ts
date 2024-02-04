@@ -22,7 +22,7 @@ export default class Metronome {
   constructor() { };
 
   private context = new AudioContext();
-  tempo = 60;
+  tempo = config.defaultTempo;
   private samples: AudioBuffer[] | null = null;
   private beat = 0;
   beatsPerBar: 2 | 3 | 4 = 4;

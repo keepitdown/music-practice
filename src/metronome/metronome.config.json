@@ -1,4 +1,5 @@
 {
   "scheduleAheadMilSec": 100,
-  "scheduleAfterMilSec": 25
+  "scheduleAfterMilSec": 25,
+  "defaultTempo": 60
 }
