@@ -1,5 +1,7 @@
 {
   "scheduleAheadMilSec": 100,
   "scheduleAfterMilSec": 25,
-  "defaultTempo": 60
+  "defaultTempo": 60,
+  "volumeSteps": 20,
+  "dBVolumeRange": 40
 }
