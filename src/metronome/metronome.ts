@@ -72,7 +72,3 @@ export default class Metronome {
     clearTimeout(this.timerId);
   }
 }
-
-
-
-const metro = new Metronome();
