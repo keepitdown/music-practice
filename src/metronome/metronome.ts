@@ -27,7 +27,6 @@ export default class Metronome {
   private beat = 0;
   beatsPerBar: 2 | 3 | 4 = 4;
 
-  private nextNoteTime = 0; //TODO: replace init value
   private timerId: ReturnType<typeof setTimeout> | undefined;
 
   remove() {
@@ -48,25 +47,34 @@ export default class Metronome {
     if (this.context.state === 'suspended') {
       this.context.resume();
     }
-
+    const scheduleAheadSec = config.scheduleAheadMilSec / 1000;
+    // Init with values for immediate playback on first schedulePlayback call
     this.beat = 0;
-    this.nextNoteTime = this.context.currentTime;
+    let beatDuration = 60 / this.tempo;
+    let nextNoteTime = this.context.currentTime;
+    let prevNoteTime: number; // Value assigned during first schedulePlayback call
 
-    const schedulePlayback = (tempo: number) => {
-      const scheduleAheadSec = config.scheduleAheadMilSec / 1000;
-      const beatDuration = 60 / tempo;
-      while (this.nextNoteTime <= this.context.currentTime + scheduleAheadSec) {
+    const schedulePlayback = () => {
+      while (nextNoteTime <= this.context.currentTime + scheduleAheadSec) {
         // const sampleBuffer = (nextBeat === 0) ? downbeatBuffer : beatBuffer;
-        playSample(this.samples![0], this.context, this.nextNoteTime);
+        playSample(this.samples![1], this.context, nextNoteTime);
         this.beat = (this.beat + 1) % this.beatsPerBar;
-        this.nextNoteTime += beatDuration;
-      }
+        prevNoteTime = nextNoteTime;
+        nextNoteTime = prevNoteTime + beatDuration;
+      };
     }
+
+    schedulePlayback(); // Schedule first note or group of notes right after metronome start
+
     const scheduleRepeatedly = () => {
-      schedulePlayback(this.tempo);
+      // Recalculate values according to currently set tempo
+      beatDuration = 60 / this.tempo;
+      nextNoteTime = prevNoteTime + beatDuration;
+      schedulePlayback();
       this.timerId = setTimeout(scheduleRepeatedly, config.scheduleAfterMilSec);
-    }
-    scheduleRepeatedly();
+    };
+
+    scheduleRepeatedly(); // Schedule subsequent notes on repeat
   }
   stop() {
     clearTimeout(this.timerId);
