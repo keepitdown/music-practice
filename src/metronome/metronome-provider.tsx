@@ -35,7 +35,7 @@ export default function MetronomeProvider({ children }: TMetronomeProvider) {
   }, [isTurnedOn]);
 
   useEffect(() => {
-    if (metronomeRef?.current?.tempo) {
+    if (metronomeRef.current) {
       metronomeRef.current.tempo = tempo;
     }
   }, [tempo]);
