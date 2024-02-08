@@ -63,8 +63,8 @@ export default class Metronome {
   }
 
   set volume(value) {
-    if (value < 0 || value > 20) {
-      throw RangeError('Volume value must be between 0 and 20');
+    if (value < 0 || value > config.volumeSteps) {
+      throw RangeError(`Volume value must be between 0 and ${config.volumeSteps}`);
     }
     this._volume = value;
     this._gain = calculateGain(value);
