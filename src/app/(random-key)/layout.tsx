@@ -1,15 +1,21 @@
 'use client'
 import SettingsButton from '@/components/settings-button/settings-button'
-import { useState, useEffect, useCallback, ReactNode } from 'react'
+import { useState, useEffect, useCallback, ReactNode, MouseEventHandler } from 'react'
 import styles from './layout.module.css'
 import Sidebar from '@/components/sidebar/sidebar';
 import { useAtom } from 'jotai';
-import { settingsSidebarAtom } from '@/state/atoms';
-import MetronomeProvider from '@/metronome/metronome-provider';
+import { settingsSidebarAtom, metronomeAtom } from '@/state/atoms';
+import useMetronome from '@/metronome/metronome-hook';
+import { useImmerAtom } from 'jotai-immer';
+import { MAX_TEMPO, MAX_VOLUME_LEVEL, MIN_TEMPO, MIN_VOLUME_LEVEL } from '@/utility/constants';
 
 export default function RandomKeyLayout({ children, settings }: { children: ReactNode, settings: ReactNode }) {
   const [showSettings, setShowSettings] = useAtom(settingsSidebarAtom);
   const [disableButton, setDisableButton] = useState(false);
+
+  const [metronomeSettings, setMetronomeSettings] = useImmerAtom(metronomeAtom);
+
+  const metronome = useMetronome({ initTempo: metronomeSettings.tempo, initVolume: metronomeSettings.volume, initBeatsPerBar: 4 });
 
   const handleToggleSettings = useCallback(() => {
     setShowSettings(!showSettings);
@@ -25,8 +31,19 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
     !disableButton && window.addEventListener('keydown', handleSettingsHotKey);
     return () => {
       window.removeEventListener('keydown', handleSettingsHotKey);
-    }
+    };
   }, [handleToggleSettings, disableButton]);
+
+  useEffect(() => {
+    metronome.setTempo(metronomeSettings.tempo);
+    metronome.setVolume(metronomeSettings.volume);
+
+  }, [metronomeSettings, metronome]);
+
+  const toggleMetronomeOn: MouseEventHandler<HTMLButtonElement> = () => {
+    metronome.setIsTurnedOn(state => !state);
+  };
+
 
   return (
     <main>
@@ -43,7 +60,27 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
         extraClass={styles.optionsButton}
         disabled={disableButton}
       />
-      <MetronomeProvider>{null}</MetronomeProvider>
+      <button onClick={toggleMetronomeOn} style={{ position: 'fixed', left: 30, bottom: 30, fontSize: 16, padding: 5 }}>Beep</button>
+      <p style={{ position: 'fixed', left: 110, bottom: 115 }}>{metronomeSettings.tempo}</p>
+      <input
+        type="range"
+        min="20"
+        max="180"
+        step="1"
+        value={metronomeSettings.tempo}
+        onChange={(e) => setMetronomeSettings(draft => { e.preventDefault; draft.tempo = Number(e.currentTarget.value) })}
+        style={{ position: 'fixed', left: 30, bottom: 80, height: 30, fontSize: 16 }}
+      />
+      <p style={{ position: 'fixed', left: 110, bottom: 195 }}>{metronomeSettings.volume}</p>
+      <input
+        type="range"
+        min="0"
+        max="20"
+        step="1"
+        value={metronomeSettings.volume}
+        onChange={(e) => setMetronomeSettings(draft => { draft.volume = Number(e.currentTarget.value) })}
+        style={{ position: 'fixed', left: 30, bottom: 160, height: 30, fontSize: 16 }}
+      />
     </main>
   )
 }

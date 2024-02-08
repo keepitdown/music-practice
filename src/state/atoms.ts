@@ -31,5 +31,11 @@ const keysInitialState = {
   }
 };
 
+const metronomeInitialState = {
+  volume: 20,
+  tempo: 60
+};
+
 export const keysAtom = atomWithStorage('selectedKeys', keysInitialState);
 export const settingsSidebarAtom = atom(false);
+export const metronomeAtom = atomWithStorage('metronomeSettings', metronomeInitialState);
