@@ -46,6 +46,7 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
 
   const handleMetronomeHotKeys = useCallback((e: KeyboardEvent) => {
     if (e.code === 'Space') {
+      e.preventDefault();
       metronome.setIsOn(state => !state);
     }
     if (e.code === 'ArrowUp') {
