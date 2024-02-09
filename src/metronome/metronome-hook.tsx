@@ -11,7 +11,7 @@ export default function useMetronome({ initTempo, initBeatsPerBar, initVolume }:
 
   const metronomeRef = useRef<Metronome | null>(null);
 
-  const [isTurnedOn, setIsTurnedOn] = useState(false);
+  const [isOn, setIsOn] = useState(false);
   const [tempo, setTempo] = useState(initTempo);
   const [volume, setVolume] = useState(initVolume);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
@@ -23,14 +23,14 @@ export default function useMetronome({ initTempo, initBeatsPerBar, initVolume }:
   }, []);
 
   useEffect(() => {
-    //TODO: rewrite without optional chaining
-    if (isTurnedOn) {
-      metronomeRef.current?.start();
+    if (metronomeRef.current) {
+      if (isOn) {
+        metronomeRef.current.start();
+      } else {
+        metronomeRef.current.stop();
+      }
     }
-    return () => {
-      metronomeRef.current?.stop();
-    }
-  }, [isTurnedOn]);
+  }, [isOn]);
 
   useEffect(() => {
     if (metronomeRef.current) {
@@ -44,5 +44,5 @@ export default function useMetronome({ initTempo, initBeatsPerBar, initVolume }:
     }
   }, [volume]);
 
-  return { setTempo, setVolume, status, setIsTurnedOn };
+  return { setTempo, setVolume, status, setIsOn };
 }

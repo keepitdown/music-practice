@@ -41,12 +41,12 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
   }, [metronomeSettings, metronome]);
 
   const toggleMetronomeOn: MouseEventHandler<HTMLButtonElement> = () => {
-    metronome.setIsTurnedOn(state => !state);
+    metronome.setIsOn(state => !state);
   };
 
   const handleMetronomeHotKeys = useCallback((e: KeyboardEvent) => {
     if (e.code === 'Space') {
-      metronome.setIsTurnedOn(state => !state);
+      metronome.setIsOn(state => !state);
     }
     if (e.code === 'ArrowUp') {
       e.preventDefault();
