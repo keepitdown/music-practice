@@ -1,6 +1,6 @@
 'use client'
 import SettingsButton from '@/components/settings-button/settings-button'
-import { useState, useEffect, useCallback, ReactNode, MouseEventHandler } from 'react'
+import { useEffect, useCallback, ReactNode, MouseEventHandler } from 'react'
 import styles from './layout.module.css'
 import Sidebar from '@/components/sidebar/sidebar';
 import { useAtom } from 'jotai';
@@ -11,7 +11,6 @@ import { MAX_TEMPO, MAX_VOLUME_LEVEL, MIN_TEMPO, MIN_VOLUME_LEVEL } from '@/util
 
 export default function RandomKeyLayout({ children, settings }: { children: ReactNode, settings: ReactNode }) {
   const [showSettings, setShowSettings] = useAtom(settingsSidebarAtom);
-  const [disableButton, setDisableButton] = useState(false);
 
   const [metronomeSettings, setMetronomeSettings] = useImmerAtom(metronomeAtom);
 
@@ -28,11 +27,11 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
         handleToggleSettings();
       }
     };
-    !disableButton && window.addEventListener('keydown', handleSettingsHotKey);
+    window.addEventListener('keydown', handleSettingsHotKey);
     return () => {
       window.removeEventListener('keydown', handleSettingsHotKey);
     };
-  }, [handleToggleSettings, disableButton]);
+  }, [handleToggleSettings]);
 
   useEffect(() => {
     metronome.setTempo(metronomeSettings.tempo);
@@ -79,7 +78,6 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
       {children}
       <Sidebar
         isOpen={showSettings}
-        setDisableButton={setDisableButton}
         setShowSettings={setShowSettings}
       >
         {settings}
@@ -87,7 +85,6 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
       <SettingsButton
         onClick={handleToggleSettings}
         extraClass={styles.optionsButton}
-        disabled={disableButton}
       />
       <button onClick={toggleMetronomeOn} style={{ position: 'fixed', left: 30, bottom: 30, fontSize: 16, padding: 5 }}>Beep</button>
       <p style={{ position: 'fixed', left: 110, bottom: 115 }}>{metronomeSettings.tempo}</p>

@@ -6,12 +6,17 @@
   width: 100vw;
   display: flex;
   justify-content: flex-end;
-  animation: fade-in 1.5s forwards;
+  visibility: hidden;
+  background-color: transparent;
+  pointer-events: none;
+  transition: background-color 1.5s linear, visibility 1.5s;
 }
 
-.overlay.close {
-  animation: fade-out 1.5s;
-  pointer-events: none;
+.overlay.show {
+  visibility: visible;
+  background-color: var(--overlay-color);
+  pointer-events: all;
+  transition: background-color 1.5s linear;
 }
 
 .content {
@@ -20,49 +25,11 @@
   height: 100%;
   width: 80%;
   max-width: 350px;
-  animation: slide-in .6s cubic-bezier(.38, .76, .57, 1);
+  transform: translateX(100%);
+  transition: transform .5s cubic-bezier(.38, .76, .57, 1);
 }
 
-.content.close {
-  animation: slide-out .6s cubic-bezier(.38, .76, .57, 1) forwards;
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slide-out {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    background-color: transparent;
-  }
-
-  to {
-    background-color: var(--overlay-color);
-  }
-}
-
-@keyframes fade-out {
-  from {
-    background-color: var(--overlay-color);
-  }
-
-  to {
-    background-color: transparent;
-  }
+.content.show {
+  transform: translateX(0);
+  transition: transform .5s cubic-bezier(.38, .76, .57, 1);
 }
