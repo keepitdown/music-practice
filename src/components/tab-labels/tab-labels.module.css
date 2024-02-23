@@ -3,7 +3,7 @@
   flex-direction: column;
   max-width: 25px;
   flex-grow: 1;
-  background-color: #282828;
+  background-color: var(--alt-contrast);
 }
 
 .label {
@@ -23,11 +23,11 @@
   .label:hover {
     cursor: pointer;
     background-color: var(--primary-color);
-    color: #1c1c1c;
+    color: var(--alt-contrast);
   }
 }
 
 .label:focus-visible {
   background-color: var(--primary-color);
-  color: #1c1c1c;
+  color: var(--alt-contrast);
 }
