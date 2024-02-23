@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import './globals.css'
 import StateProvider from '@/state/state-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
   title: 'Music Practice',
