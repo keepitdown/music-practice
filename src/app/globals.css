@@ -6,7 +6,8 @@
 
 :root {
   --background: #111;
-  --alt-background: #212121;
+  --alt-background: #1c1c1c;
+  --alt-contrast: #282828;
   --primary-color: #fff;
   --overlay-color: #111c;
   background-color: var(--background);

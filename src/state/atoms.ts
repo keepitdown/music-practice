@@ -1,3 +1,4 @@
+import { TSettingsTab } from "@/utility/types";
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
@@ -38,4 +39,5 @@ const metronomeInitialState = {
 
 export const keysAtom = atomWithStorage('selectedKeys', keysInitialState);
 export const settingsSidebarAtom = atom(false);
+export const settingsTabAtom = atomWithStorage<TSettingsTab>('settingsTab', 'keys');
 export const metronomeAtom = atomWithStorage('metronomeSettings', metronomeInitialState);

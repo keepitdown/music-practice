@@ -13,3 +13,8 @@ export type TKey =
   | 'b';
 
 export type TSelectedKeys = { [accidental in TAccidental]: { [key in TKey]: boolean } };
+
+export type TSettingsTab =
+  | 'keys'
+  | 'metronome'
+  | 'general';

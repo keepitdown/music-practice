@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 25px;
+  flex-grow: 1;
+  background-color: #282828;
+}
+
+.label {
+  font-size: 14px;
+  border: none;
+  background-color: transparent;
+  min-height: 85px;
+  transition: background-color .2s ease-out, color .2s;
+}
+
+.label.selected {
+  background-color: var(--primary-color);
+  color: #1c1c1c;
+}
+
+@media (hover: hover) {
+  .label:hover {
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: #1c1c1c;
+  }
+}
+
+.label:focus-visible {
+  background-color: var(--primary-color);
+  color: #1c1c1c;
+}

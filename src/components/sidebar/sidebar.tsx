@@ -21,9 +21,9 @@ export default function Sidebar({ children, isOpen, setShowSettings }: TSidebar)
       className={styles.overlay + (isOpen ? (' ' + styles.show) : '')}
       onClick={handleOverlayClick}
     >
-      <aside className={styles.content + (isOpen ? (' ' + styles.show) : '')}>
+      <div className={styles.content + (isOpen ? (' ' + styles.show) : '')}>
         {children}
-      </aside>
+      </div>
     </div>
   )
 }
