@@ -5,6 +5,9 @@ import styles from './key-selector.module.css'
 import Button from '../button/button'
 import { keysAtom } from '@/state/atoms'
 import { useImmerAtom } from 'jotai-immer'
+import NaturalIcon from '@/inline-svg/natural-icon'
+import SharpIcon from '@/inline-svg/sharp-icon'
+import FlatIcon from '@/inline-svg/flat-icon'
 
 export default function KeySelector() {
 
@@ -37,9 +40,22 @@ export default function KeySelector() {
           <thead className={styles.tableHeading}>
             <tr>
               <td className={styles.keysHeading}></td>
-            <th scope="col"><Button onClick={() => handleAccidentalClick('natural')}>&#9838;</Button></th>
-            <th scope="col"><Button onClick={() => handleAccidentalClick('sharp')}>&#9839;</Button></th>
-              <th scope="col"><Button onClick={() => handleAccidentalClick('flat')}>&#9837;</Button></th>
+              {/* <th scope="col"><Button onClick={() => handleAccidentalClick('natural')}>&#9838;</Button></th> */}
+              <th scope="col">
+                <Button onClick={() => handleAccidentalClick('natural')} addStyles={styles.accidentalButton}>
+                  <NaturalIcon title="Натуральные тональности" width={24} height={24} addStyles={styles.accidentalIcon} />
+                </Button>
+              </th>
+              <th scope="col">
+                <Button onClick={() => handleAccidentalClick('sharp')} addStyles={styles.accidentalButton}>
+                  <SharpIcon title="Тональности с диезом" width={24} height={24} addStyles={styles.accidentalIcon} />
+                </Button>
+              </th>
+              <th scope="col">
+                <Button onClick={() => handleAccidentalClick('flat')} addStyles={styles.accidentalButton}>
+                  <FlatIcon title="Тональности с бемолем" width={24} height={24} addStyles={styles.accidentalIcon} />
+                </Button>
+              </th>
             </tr>
           </thead>
           <tbody>

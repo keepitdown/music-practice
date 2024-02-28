@@ -25,6 +25,25 @@
   height: 48px;
 }
 
+.accidentalButton {
+  font-size: 0;
+}
+
+.accidentalIcon {
+  fill: var(--primary-color);
+  transition: fill .2s ease-out;
+}
+
+@media (hover: hover) {
+  .accidentalButton:hover .accidentalIcon {
+    fill: var(--alt-background);
+  }
+}
+
+.accidentalButton:focus-visible .accidentalIcon {
+  fill: var(--alt-background);
+}
+
 .keysHeading {
   width: 26px;
 }
