@@ -46,8 +46,8 @@ export default class Metronome {
   private _context: AudioContext | null = null;
   private _sampleBuffers: { downBeat: ArrayBuffer, beat: ArrayBuffer } | null = null;
   private _samples: { downBeat: AudioBuffer, beat: AudioBuffer } | null = null;
-  private _tempo = config.defaultTempo;
   // Gain and volume init values is assigned by constructor using volume setter;
+  private _tempo!: number;
   private _gain!: number;
   private _volume!: number;
   private _beat = 0;
