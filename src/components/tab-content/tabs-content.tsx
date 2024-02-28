@@ -11,6 +11,7 @@ export default function TabContent() {
   return (
     <>
       {activeTab === 'keys' && <KeySelector />}
+      {activeTab === 'metronome' && <MetronomeSettings />}
     </>
   );
 }

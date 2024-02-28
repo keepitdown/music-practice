@@ -1,0 +1,18 @@
+.container {
+  padding: 0 20px;
+}
+
+.heading {
+  font-size: 22px;
+  margin: 22px 0 20px 0;
+  text-align: center;
+}
+
+.range {
+  margin-bottom: 40px;
+}
+
+.signatureSelector {
+  margin-top: 50px;
+  margin-left: 25px;
+}

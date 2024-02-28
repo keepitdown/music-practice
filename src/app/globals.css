@@ -9,6 +9,7 @@
   --alt-background: #1c1c1c;
   --alt-contrast: #282828;
   --primary-color: #fff;
+  --primary-hover-color: #aaa;
   --overlay-color: #111c;
   background-color: var(--background);
   color: var(--primary-color);
@@ -36,4 +37,8 @@
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button {
+  font-family: inherit;
 }

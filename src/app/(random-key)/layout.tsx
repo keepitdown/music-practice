@@ -8,6 +8,7 @@ import { settingsSidebarAtom, metronomeAtom } from '@/state/atoms';
 import useMetronome from '@/metronome/metronome-hook';
 import { useImmerAtom } from 'jotai-immer';
 import { MAX_TEMPO, MAX_VOLUME_LEVEL, MIN_TEMPO, MIN_VOLUME_LEVEL } from '@/utility/constants';
+import MetronomeButton from '@/components/metronome-button/metronome-button';
 
 export default function RandomKeyLayout({ children, settings }: { children: ReactNode, settings: ReactNode }) {
   const [showSettings, setShowSettings] = useAtom(settingsSidebarAtom);
@@ -36,6 +37,7 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
   useEffect(() => {
     metronome.setTempo(metronomeSettings.tempo);
     metronome.setVolume(metronomeSettings.volume);
+    metronome.setBeatsPerBar(metronomeSettings.beatsPerBar);
 
   }, [metronomeSettings, metronome]);
 
@@ -82,30 +84,10 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
       >
         {settings}
       </Sidebar>
+      <MetronomeButton metronomeIsOn={metronome.isOn} onClick={toggleMetronomeOn} />
       <SettingsButton
         onClick={handleToggleSettings}
         extraClass={styles.optionsButton}
-      />
-      <button onClick={toggleMetronomeOn} style={{ position: 'fixed', left: 30, bottom: 30, fontSize: 16, padding: 5 }}>Beep</button>
-      <p style={{ position: 'fixed', left: 110, bottom: 115 }}>{metronomeSettings.tempo}</p>
-      <input
-        type="range"
-        min="20"
-        max="180"
-        step="1"
-        value={metronomeSettings.tempo}
-        onChange={(e) => setMetronomeSettings(draft => { e.preventDefault; draft.tempo = Number(e.currentTarget.value) })}
-        style={{ position: 'fixed', left: 30, bottom: 80, height: 30, fontSize: 16 }}
-      />
-      <p style={{ position: 'fixed', left: 110, bottom: 195 }}>{metronomeSettings.volume}</p>
-      <input
-        type="range"
-        min="0"
-        max="20"
-        step="1"
-        value={metronomeSettings.volume}
-        onChange={(e) => setMetronomeSettings(draft => { draft.volume = Number(e.currentTarget.value) })}
-        style={{ position: 'fixed', left: 30, bottom: 160, height: 30, fontSize: 16 }}
       />
     </main>
   )
