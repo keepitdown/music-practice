@@ -53,7 +53,7 @@ export default function KeySelector() {
               </th>
               <th scope="col">
                 <Button onClick={() => handleAccidentalClick('flat')} addStyles={styles.accidentalButton}>
-                  <FlatIcon title="Тональности с бемолем" width={24} height={24} addStyles={styles.accidentalIcon} />
+                  <FlatIcon title="Тональности с бемолем" width={22} height={22} addStyles={styles.accidentalIcon} />
                 </Button>
               </th>
             </tr>
