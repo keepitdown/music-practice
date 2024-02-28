@@ -1,5 +1,4 @@
 'use client'
-import Button from '../button/button'
 import styles from './shuffle-button.module.css'
 import Image from 'next/image'
 import shuffleIcon from '@/images/repeat-icon-2-cropped.svg'
@@ -7,11 +6,12 @@ import { AnimationEventHandler, MouseEventHandler } from 'react'
 
 type TShuffleButton = {
   onClick: MouseEventHandler<HTMLButtonElement>;
+  addStyles: string;
 };
 
 // TODO: pass prop onClick from parent component or remove
 
-export default function ShuffleButton({ onClick }: TShuffleButton) {
+export default function ShuffleButton({ onClick, addStyles }: TShuffleButton) {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick(e);
@@ -25,7 +25,7 @@ export default function ShuffleButton({ onClick }: TShuffleButton) {
   return (
     <button
       type="button"
-      className={styles.button}
+      className={styles.button + (addStyles ? (' ' + addStyles) : '')}
       onClick={handleClick}
       onAnimationEnd={handleAnimationEnd}
     >

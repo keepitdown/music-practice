@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Teko } from 'next/font/google'
 import { ReactNode } from 'react'
 import './globals.css'
 import StateProvider from '@/state/state-provider'
+import styles from './layout.module.css';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
+const teko = Teko({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Music Practice',
@@ -26,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <header className={styles.header + ' ' + teko.className}><h1 className={styles.heading}>Music<br />Practice</h1></header>
         <StateProvider>
           {children}
         </StateProvider>
