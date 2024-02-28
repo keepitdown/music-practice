@@ -1,12 +1,16 @@
 import config from './metronome.config.json'
 
-function loadSamples(sampleUrls: string[], audioContext: AudioContext) {
+function loadSamples(sampleUrls: string[]) {
   const bufferPromises = sampleUrls.map(async url => {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    return audioBuffer;
+    return arrayBuffer;
   });
+  return Promise.all(bufferPromises);
+}
+
+function processSamples(sampleBuffers: ArrayBuffer[], audioContext: AudioContext) {
+  const bufferPromises = sampleBuffers.map(async buffer => await audioContext.decodeAudioData(buffer));
   return Promise.all(bufferPromises);
 }
 
@@ -39,7 +43,8 @@ export default class Metronome {
 
   beatsPerBar;
 
-  private _context = new AudioContext();
+  private _context: AudioContext | null = null;
+  private _sampleBuffers: { downBeat: ArrayBuffer, beat: ArrayBuffer } | null = null;
   private _samples: { downBeat: AudioBuffer, beat: AudioBuffer } | null = null;
   private _tempo = config.defaultTempo;
   // Gain and volume init values is assigned by constructor using volume setter;
@@ -72,13 +77,15 @@ export default class Metronome {
   }
 
   remove() {
-    this._context.close();
+    if (this._context) {
+      this._context.close();
+    }
   }
 
   async loadSamples() {
     try {
-      const [downBeat, beat] = await loadSamples(['/audio/downbeat-click.wav', '/audio/beat-click.wav'], this._context);
-      this._samples = { downBeat, beat };
+      const [downBeat, beat] = await loadSamples(['/audio/downbeat-click.wav', '/audio/beat-click.wav']);
+      this._sampleBuffers = { downBeat, beat };
       return 'success';
     }
     catch (error) {
@@ -86,13 +93,17 @@ export default class Metronome {
     }
   }
 
-  start() {
+  async start() {
     //TODO: add error handling for no samples
-    if (!this._samples) {
+    if (!this._sampleBuffers) {
       console.error('Samples are not loaded');
       return null;
     }
-    if (this._context.state === 'suspended') {
+    if (!this._context) {
+      //AudioContext created on first playback to avoid AudioContext suspended console warning
+      this._context = new AudioContext();
+      const [downBeat, beat] = await processSamples([this._sampleBuffers.downBeat, this._sampleBuffers.beat], this._context);
+      this._samples = { downBeat, beat };
       this._context.resume();
     }
     const scheduleAheadSec = config.scheduleAheadMilSec / 1000;
@@ -103,14 +114,14 @@ export default class Metronome {
     let prevNoteTime: number; // Value assigned during first schedulePlayback call
 
     const schedulePlayback = () => {
-      while (nextNoteTime <= this._context.currentTime + scheduleAheadSec) {
+      while (nextNoteTime <= this._context!.currentTime + scheduleAheadSec) {
         if (this.beatsPerBar) {
           this._beat = (this._beat < this.beatsPerBar) ? (this._beat + 1) : 1;
         } else {
           this._beat = 0;
         }
         const nextNoteSample = (this._beat === 1) ? this._samples!.downBeat : this._samples!.beat;
-        playSample(nextNoteSample, this._context, this._gain, nextNoteTime);
+        playSample(nextNoteSample, this._context!, this._gain, nextNoteTime);
         prevNoteTime = nextNoteTime;
         nextNoteTime = prevNoteTime + beatDuration;
       };
