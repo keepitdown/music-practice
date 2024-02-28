@@ -1,6 +1,6 @@
 import IncreaseIcon from '@/inline-svg/increase-icon';
 import styles from './range.module.css';
-import { ChangeEventHandler, MouseEventHandler, ReactNode, WheelEventHandler, useRef } from 'react';
+import { ChangeEventHandler, MouseEventHandler, ReactNode, WheelEventHandler } from 'react';
 import DecreaseIcon from '@/inline-svg/decrease-icon';
 
 type TRange = {
