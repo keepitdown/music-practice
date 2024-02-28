@@ -28,6 +28,8 @@
   flex-direction: column;
   transform: translateX(100%);
   transition: transform .5s cubic-bezier(.38, .76, .57, 1);
+  /* help avoiding performance ussies in Chrome for Android*/
+  will-change: transform;
 }
 
 .content.show {
