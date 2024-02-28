@@ -35,6 +35,7 @@
 }
 
 button,
+input[type="checkbox"],
 a {
   -webkit-tap-highlight-color: transparent;
 }
