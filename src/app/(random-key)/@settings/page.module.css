@@ -1,9 +1,19 @@
-.heading {
-  font-size: 28px;
-  margin: 0 0 22px 36px;
+.container {
+  height: 100%;
+  display: flex;
 }
 
-.subHeading {
-  font-size: 22px;
-  margin: 0 0 20px 36px;
+.content {
+  flex-grow: 1;
+  background-color: var(--alt-background);
+
+  /* fail-safe for options button on mobile displays with low height */
+  overflow-y: auto;
+  padding-bottom: 64px;
+}
+
+.heading {
+  font-size: 28px;
+  margin: 10px 0 20px;
+  text-align: center;
 }

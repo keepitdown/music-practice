@@ -86,7 +86,7 @@ export default function RandomKeyPage() {
   //Enable shuffle hotkey
   useEffect(() => {
     const handleShuffleHotKey = (e: KeyboardEvent) => {
-      if (e.code === 'KeyR') {
+      if (e.code === 'KeyM') {
         handleTriggerShuffle();
       }
     };
@@ -98,9 +98,8 @@ export default function RandomKeyPage() {
 
   return (
     <div className={styles.pageContainer}>
-      <h1 className={styles.heading}>Случайные тональности</h1>
       <KeyDisplay data={displayedKeys} stylesClass={styles.displayContainer} />
-      <ShuffleButton onClick={handleTriggerShuffle} />
+      <ShuffleButton onClick={handleTriggerShuffle} addStyles={styles.shuffleButton} />
     </ div>
   )
 }

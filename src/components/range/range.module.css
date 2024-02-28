@@ -1,0 +1,90 @@
+.mainContainer {
+  border: none;
+}
+
+.valueContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 35px;
+  margin-left: 35px;
+  margin-bottom: 10px;
+}
+
+.value {
+  display: block;
+  max-width: 200px;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+  user-select: none;
+}
+
+.button {
+  display: block;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.buttonIcon {
+  stroke: var(--primary-color);
+  transition: stroke .3s ease-out;
+}
+
+@media (hover: hover) {
+  .buttonIcon:hover {
+    stroke: var(--primary-hover-color);
+  }
+}
+
+.inputContainer {
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 30px;
+}
+
+.labelContainer {
+  min-width: 30px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.rangeInput {
+  flex-grow: 1;
+  appearance: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.rangeInput::-moz-range-track {
+  background-color: var(--primary-color);
+  height: 5px;
+  border-radius: 2px;
+}
+
+.rangeInput::-webkit-slider-runnable-track {
+  background-color: var(--primary-color);
+  height: 5px;
+  border-radius: 2px;
+}
+
+.rangeInput::-moz-range-thumb {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
+
+.rangeInput::-webkit-slider-thumb {
+  appearance: none;
+  background-color: var(--primary-color);
+  height: 15px;
+  width: 15px;
+  margin-top: -6px;
+  border-radius: 50%;
+}

@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 25px;
+  background-color: var(--alt-contrast);
+}
+
+.label {
+  font-size: 14px;
+  border: none;
+  background-color: transparent;
+  min-height: 85px;
+  transition: background-color .2s ease-out, color .2s;
+  cursor: pointer;
+}
+
+.labelIcon {
+  fill: var(--primary-color);
+  transition: fill .2s ease-out;
+}
+
+.label.selected {
+  background-color: var(--primary-color);
+  color: var(--alt-contrast);
+}
+
+.label.selected .labelIcon {
+  fill: var(--alt-contrast);
+}
+
+@media (hover: hover) {
+  .label:hover {
+    background-color: var(--primary-color);
+    color: var(--alt-contrast);
+  }
+
+  .label:hover .labelIcon {
+    fill: var(--alt-contrast);
+  }
+}
+
+.label:focus-visible {
+  background-color: var(--primary-color);
+  color: var(--alt-contrast);
+}
+
+.label:focus-visible .labelIcon {
+  fill: var(--alt-contrast);
+}

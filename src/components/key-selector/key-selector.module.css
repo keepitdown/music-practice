@@ -1,5 +1,12 @@
+.heading {
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .form {
   max-width: 200px;
+  margin: 0 auto;
 }
 
 .table {
@@ -16,6 +23,25 @@
   font-size: 22px;
   vertical-align: top;
   height: 48px;
+}
+
+.accidentalButton {
+  font-size: 0;
+}
+
+.accidentalIcon {
+  fill: var(--primary-color);
+  transition: fill .2s ease-out;
+}
+
+@media (hover: hover) {
+  .accidentalButton:hover .accidentalIcon {
+    fill: var(--alt-background);
+  }
+}
+
+.accidentalButton:focus-visible .accidentalIcon {
+  fill: var(--alt-background);
 }
 
 .keysHeading {
