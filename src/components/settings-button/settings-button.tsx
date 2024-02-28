@@ -1,18 +1,20 @@
-import Image from 'next/image'
-import settingsIcon from '@/images/settings-icon-cropped.svg'
 import styles from './settings-button.module.css'
 import { AnimationEventHandler, MouseEventHandler } from 'react';
+import SettingsIcon from '@/inline-svg/settings-icon';
 
 type TSettingsButton = {
   onClick: MouseEventHandler<HTMLButtonElement>;
-  extraClass?: string;
+  addStyles?: string;
   disabled?: boolean;
 };
 
-export default function SettingsButton({ onClick, extraClass, disabled }: TSettingsButton) {
+export default function SettingsButton({ onClick, addStyles, disabled }: TSettingsButton) {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick(e);
+    e.currentTarget.classList.remove(styles.pressed);
+    //Trigger reflow to make removing class take effect
+    e.currentTarget.offsetHeight;
     e.currentTarget.classList.add(styles.pressed);
   };
 
@@ -25,14 +27,10 @@ export default function SettingsButton({ onClick, extraClass, disabled }: TSetti
       type="button"
       onClick={handleClick}
       onAnimationEnd={handleAnimationEnd}
-      className={styles.button + (extraClass ? (' ' + extraClass) : '')}
+      className={styles.button + (addStyles ? (' ' + addStyles) : '')}
       disabled={disabled}
     >
-      <Image
-        src={settingsIcon}
-        alt="Показать настройки"
-        className={styles.buttonImage}
-      />
+      <SettingsIcon title="Настройки" width={44} height={44} addStyles={styles.buttonIcon} />
     </ button>
   )
 }

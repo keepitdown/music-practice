@@ -6,30 +6,24 @@
   cursor: pointer;
 }
 
-@media (hover: hover) {
-  .button:hover {
-    filter: drop-shadow(#111 0 0 5px) drop-shadow(#c8c8c8 0 0 8px);
-  }
-}
-
-.buttonImage {
+.buttonIcon {
   display: block;
+  fill: var(--primary-color);
+  transition: fill .3s ease-out;
 }
 
-.pressed .buttonImage {
-  animation: scale-down .3s;
+.pressed .buttonIcon {
+  animation: light-up 1.1s ease-out;
 }
 
-@keyframes scale-down {
+@keyframes light-up {
   from {
-    scale: 1;
+    filter: drop-shadow(#c8c8c8 0 0 3px) drop-shadow(var(--primary-color) 0 0 7px);
   }
+}
 
-  50% {
-    scale: .9;
-  }
-
-  to {
-    scale: 1;
+@media (hover: hover) {
+  .button:hover:not(.pressed) .buttonIcon {
+    fill: var(--primary-hover-color);
   }
 }

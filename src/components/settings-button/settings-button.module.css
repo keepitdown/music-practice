@@ -2,34 +2,46 @@
   background-color: transparent;
   border: none;
   border-radius: 50%;
-  transition: box-shadow .5s;
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
 }
 
-@media (hover: hover) {
-  .button:hover {
-    box-shadow: #a7a7a7 0 0 10px 4px, #c8c8c8 0 0 5px 2px inset;
-    cursor: pointer;
-  }
+.buttonIcon {
+  fill: var(--primary-color);
+  transition: fill .3s ease-out;
 }
 
-.buttonImage {
+.buttonIcon {
   display: block;
 }
 
-.pressed .buttonImage {
-  animation: scale-down .3s;
+/* Using pseudo-element with box-shadow instead of filter for better performance*/
+.button:after {
+  content: '';
+  display: block;
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 50%;
+  z-index: -1;
 }
 
-@keyframes scale-down {
+button.pressed:after {
+  animation: light-up 1.1s ease-out;
+}
+
+@keyframes light-up {
   from {
-    scale: 1;
+    filter: drop-shadow(var(--primary-color) 0 0 5px);
+    box-shadow: var(--primary-color) 0 0 10px 4px, var(--primary-color) 0 0 10px 6px inset;
   }
+}
 
-  50% {
-    scale: .9;
-  }
-
-  to {
-    scale: 1;
+@media (hover: hover) {
+  .button:hover:not(.pressed) .buttonIcon {
+    fill: var(--primary-hover-color);
   }
 }

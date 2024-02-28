@@ -27,6 +27,9 @@ export default function MetronomeButton({ metronomeIsOn, onClick, addStyles, dis
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick(e);
+    e.currentTarget.classList.remove(styles.pressed);
+    //Trigger reflow to make removing class take effect
+    e.currentTarget.offsetHeight;
     e.currentTarget.classList.add(styles.pressed);
   }
 

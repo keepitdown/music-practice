@@ -1,8 +1,7 @@
 'use client'
 import styles from './shuffle-button.module.css'
-import Image from 'next/image'
-import shuffleIcon from '@/images/repeat-icon-2-cropped.svg'
 import { AnimationEventHandler, MouseEventHandler } from 'react'
+import ShuffleIcon from '@/inline-svg/shuffle-icon'
 
 type TShuffleButton = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -15,6 +14,9 @@ export default function ShuffleButton({ onClick, addStyles }: TShuffleButton) {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick(e);
+    e.currentTarget.classList.remove(styles.pressed);
+    //Trigger reflow to make removing class take effect
+    e.currentTarget.offsetHeight;
     e.currentTarget.classList.add(styles.pressed);
   };
 
@@ -29,7 +31,7 @@ export default function ShuffleButton({ onClick, addStyles }: TShuffleButton) {
       onClick={handleClick}
       onAnimationEnd={handleAnimationEnd}
     >
-      <Image width={50} src={shuffleIcon} alt="Перемешать" className={styles.buttonImage} />
+      <ShuffleIcon title="Перемешать" addStyles={styles.buttonIcon} width={50} />
     </button>
   )
 }
