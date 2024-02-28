@@ -1,3 +1,7 @@
+.mainContainer {
+  border: none;
+}
+
 .valueContainer {
   display: flex;
   align-items: center;

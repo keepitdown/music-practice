@@ -19,7 +19,7 @@ type TRange = {
 export default function Range({ min, max, step, value, addStyles, children, onChange, onWheel, onIncrease, onDecrease }: TRange) {
 
   return (
-    <div className={addStyles}>
+    <fieldset className={styles.mainContainer + (addStyles ? (' ' + addStyles) : '')}>
       <div className={styles.valueContainer}>
         <button
           className={styles.button}
@@ -50,6 +50,6 @@ export default function Range({ min, max, step, value, addStyles, children, onCh
           onWheel={onWheel}
         />
       </div>
-    </div>
+    </fieldset>
   );
 }

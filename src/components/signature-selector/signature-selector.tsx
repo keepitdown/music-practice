@@ -25,7 +25,7 @@ export default function SignatureSelector({ addStyles }: TSignatureSelector) {
   };
 
   return (
-    <div className={styles.container + ' ' + archivo.className + (addStyles ? (' ' + addStyles) : '')}>
+    <fieldset className={styles.container + ' ' + archivo.className + (addStyles ? (' ' + addStyles) : '')}>
 
       <button
         type="button"
@@ -72,6 +72,6 @@ export default function SignatureSelector({ addStyles }: TSignatureSelector) {
         </div>
       </button>
 
-    </div>
+    </fieldset>
   );
 }
