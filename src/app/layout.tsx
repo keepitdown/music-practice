@@ -17,8 +17,8 @@ export const metadata: Metadata = {
     type: 'website',
     url: '/',
     images: [{
-      url: '/preview-image-cropped.png',
-      width: 960,
+      url: '/images/preview-image.png',
+      width: 910,
       height: 620
     }]
   }
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body className={inter.className}>
         <header className={styles.header + ' ' + teko.className}><h1 className={styles.heading}>Music<br />Practice</h1></header>
         <StateProvider>
