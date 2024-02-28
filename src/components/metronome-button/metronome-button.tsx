@@ -7,10 +7,11 @@ import MetronomeIcon from '@/inline-svg/metronome-icon';
 type TMetronomeButton = {
   metronomeIsOn: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
+  addStyles?: string;
   disabled?: boolean;
 };
 
-export default function MetronomeButton({ metronomeIsOn, onClick, disabled }: TMetronomeButton) {
+export default function MetronomeButton({ metronomeIsOn, onClick, addStyles, disabled }: TMetronomeButton) {
 
   const metronomeSettings = useAtomValue(metronomeAtom);
   const [displayedTempo, setDisplayedTempo] = useState<number | null>(null);
@@ -36,12 +37,12 @@ export default function MetronomeButton({ metronomeIsOn, onClick, disabled }: TM
   return (
     <button
       type="button"
-      className={styles.button}
+      className={styles.button + (addStyles ? (' ' + addStyles) : '')}
       onClick={handleClick}
       onAnimationEnd={handleAnimationEnd}
       disabled={disabled}
     >
-      <MetronomeIcon addStyles={styles.buttonIcon} title={(!metronomeIsOn ? "Включить" : "Выключить") + " метроном"} />
+      <MetronomeIcon addStyles={styles.buttonIcon} width={38} height={38} title={(!metronomeIsOn ? "Включить" : "Выключить") + " метроном"} />
       <span className={styles.tempoValue}>{displayedTempo}</span>
     </button>
   );

@@ -84,10 +84,14 @@ export default function RandomKeyLayout({ children, settings }: { children: Reac
       >
         {settings}
       </Sidebar>
-      <MetronomeButton metronomeIsOn={metronome.isOn} onClick={toggleMetronomeOn} />
+      <MetronomeButton
+        metronomeIsOn={metronome.isOn}
+        onClick={toggleMetronomeOn}
+        addStyles={styles.metronomeButton}
+      />
       <SettingsButton
         onClick={handleToggleSettings}
-        extraClass={styles.optionsButton}
+        addStyles={styles.optionsButton}
       />
     </main>
   )

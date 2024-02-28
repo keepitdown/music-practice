@@ -1,3 +1,9 @@
+.metronomeButton {
+  position: fixed;
+  left: 20px;
+  bottom: 10px;
+}
+
 .optionsButton {
   position: fixed;
   bottom: 20px;
