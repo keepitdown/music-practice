@@ -1,3 +1,10 @@
+export type TInlineSvg = {
+  width?: number,
+  height?: number,
+  addStyles?: string,
+  title: string
+};
+
 export type TAccidental =
   | 'natural'
   | 'sharp'

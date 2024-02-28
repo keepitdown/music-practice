@@ -1,8 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  max-width: 25px;
-  flex-grow: 1;
+  width: 25px;
   background-color: var(--alt-contrast);
 }
 
@@ -12,22 +11,39 @@
   background-color: transparent;
   min-height: 85px;
   transition: background-color .2s ease-out, color .2s;
+  cursor: pointer;
+}
+
+.labelIcon {
+  fill: var(--primary-color);
+  transition: fill .2s ease-out;
 }
 
 .label.selected {
   background-color: var(--primary-color);
-  color: #1c1c1c;
+  color: var(--alt-contrast);
+}
+
+.label.selected .labelIcon {
+  fill: var(--alt-contrast);
 }
 
 @media (hover: hover) {
   .label:hover {
-    cursor: pointer;
     background-color: var(--primary-color);
     color: var(--alt-contrast);
+  }
+
+  .label:hover .labelIcon {
+    fill: var(--alt-contrast);
   }
 }
 
 .label:focus-visible {
   background-color: var(--primary-color);
   color: var(--alt-contrast);
+}
+
+.label:focus-visible .labelIcon {
+  fill: var(--alt-contrast);
 }
