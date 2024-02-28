@@ -18,3 +18,9 @@ export type TSettingsTab =
   | 'keys'
   | 'metronome'
   | 'general';
+
+export type TMetronomeSettings = {
+  volume: number;
+  tempo: number;
+  beatsPerBar: null | 2 | 3 | 4;
+};

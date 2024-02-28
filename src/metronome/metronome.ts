@@ -31,7 +31,7 @@ function calculateGain(volume: number) {
 
 export default class Metronome {
 
-  constructor({ tempo, beatsPerBar, volume }: { tempo: number, beatsPerBar: 2 | 3 | 4, volume: number }) {
+  constructor({ tempo, beatsPerBar, volume }: { tempo: number, beatsPerBar: null | 2 | 3 | 4, volume: number }) {
     this.tempo = tempo;
     this.beatsPerBar = beatsPerBar;
     this.volume = volume;
@@ -40,10 +40,11 @@ export default class Metronome {
   beatsPerBar;
 
   private _context = new AudioContext();
-  private _samples: AudioBuffer[] | null = null;
+  private _samples: { downBeat: AudioBuffer, beat: AudioBuffer } | null = null;
   private _tempo = config.defaultTempo;
-  private _gain!: number; // Init value is assigned by the volume setter;
-  private _volume = 20;
+  // Gain and volume init values is assigned by constructor using volume setter;
+  private _gain!: number;
+  private _volume!: number;
   private _beat = 0;
   private _timerId: ReturnType<typeof setTimeout> | undefined;
 
@@ -76,7 +77,8 @@ export default class Metronome {
 
   async loadSamples() {
     try {
-      this._samples = await loadSamples(['/audio/downbeat-click.wav', '/audio/beat-click.wav'], this._context)
+      const [downBeat, beat] = await loadSamples(['/audio/downbeat-click.wav', '/audio/beat-click.wav'], this._context);
+      this._samples = { downBeat, beat };
       return 'success';
     }
     catch (error) {
@@ -85,6 +87,11 @@ export default class Metronome {
   }
 
   start() {
+    //TODO: add error handling for no samples
+    if (!this._samples) {
+      console.error('Samples are not loaded');
+      return null;
+    }
     if (this._context.state === 'suspended') {
       this._context.resume();
     }
@@ -97,9 +104,13 @@ export default class Metronome {
 
     const schedulePlayback = () => {
       while (nextNoteTime <= this._context.currentTime + scheduleAheadSec) {
-        // const sampleBuffer = (nextBeat === 0) ? downbeatBuffer : beatBuffer;
-        playSample(this._samples![1], this._context, this._gain, nextNoteTime);
-        this._beat = (this._beat + 1) % this.beatsPerBar;
+        if (this.beatsPerBar) {
+          this._beat = (this._beat < this.beatsPerBar) ? (this._beat + 1) : 1;
+        } else {
+          this._beat = 0;
+        }
+        const nextNoteSample = (this._beat === 1) ? this._samples!.downBeat : this._samples!.beat;
+        playSample(nextNoteSample, this._context, this._gain, nextNoteTime);
         prevNoteTime = nextNoteTime;
         nextNoteTime = prevNoteTime + beatDuration;
       };

@@ -3,7 +3,7 @@ import Metronome from "./metronome";
 
 type TMetronomeHook = {
   initTempo: number;
-  initBeatsPerBar: 2 | 3 | 4;
+  initBeatsPerBar: null | 2 | 3 | 4;
   initVolume: number;
 }
 
@@ -14,6 +14,7 @@ export default function useMetronome({ initTempo, initBeatsPerBar, initVolume }:
   const [isOn, setIsOn] = useState(false);
   const [tempo, setTempo] = useState(initTempo);
   const [volume, setVolume] = useState(initVolume);
+  const [beatsPerBar, setBeatsPerBar] = useState(initBeatsPerBar);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
   useEffect(() => {
@@ -44,5 +45,11 @@ export default function useMetronome({ initTempo, initBeatsPerBar, initVolume }:
     }
   }, [volume]);
 
-  return { setTempo, setVolume, status, setIsOn };
+  useEffect(() => {
+    if (metronomeRef.current) {
+      metronomeRef.current.beatsPerBar = beatsPerBar;
+    }
+  }, [beatsPerBar]);
+
+  return { setIsOn, setTempo, setVolume, setBeatsPerBar, status, isOn };
 }
