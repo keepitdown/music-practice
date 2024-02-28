@@ -1,5 +1,12 @@
+.heading {
+  font-size: 22px;
+  margin: 22px 0 20px 0;
+  text-align: center;
+}
+
 .form {
   max-width: 200px;
+  margin: 0 auto;
 }
 
 .table {
